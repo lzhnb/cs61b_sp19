@@ -10,6 +10,23 @@ public class IntListTest {
      * assertEquals knows how to handle IntLists just fine.
      */
 
+    /**
+     * reverse test implementation
+     */
+    @Test(timeout = 1000)
+    public void testReverse() {
+        IntList origin1 = IntList.of(1, 2, 3);
+        IntList excepted1 = IntList.of(3, 2, 1);
+        IntList actual1 = IntList.reverse(origin1);
+        assertEquals(excepted1, actual1);
+        assertNotEquals(origin1, actual1);
+
+        IntList origin2 = IntList.of();
+        IntList excepted2 = IntList.of();
+        IntList actual2 = IntList.reverse(origin2);
+        assertEquals(excepted2, actual2);
+    }
+
     @Test
     public void testList() {
         IntList one = new IntList(1, null);
