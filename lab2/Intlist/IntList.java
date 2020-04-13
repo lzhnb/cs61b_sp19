@@ -1,4 +1,5 @@
 import java.util.Formatter;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * A naked recursive list of integers, similar to what we saw in lecture 3, but
@@ -82,7 +83,15 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        } else {
+            while (A.rest != null) {
+                A = A.rest;
+            }
+            A.rest = B;
+            return A;
+        }
     }
 
     /**
@@ -91,7 +100,11 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        } else {
+            return new IntList(A.first, catenate(A.rest, B));
+        }
     }
 
 
