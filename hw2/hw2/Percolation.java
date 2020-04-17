@@ -19,7 +19,7 @@ public class Percolation {
         grid = new boolean[N][N];
         size = N;
         top = 0;
-        bottom = N * N - 1;
+        bottom = N * N + 1;
         uf = new WeightedQuickUnionUF(N * N + 2);
         ufTopOnly = new WeightedQuickUnionUF(N * N + 1);
     }
@@ -43,6 +43,9 @@ public class Percolation {
         }
         if (row == 0) {
             ufTopOnly.union(top, xy2Index(row, col));
+        }
+        if (row == size - 1) {
+            uf.union(bottom, xy2Index(row, col));
         }
         if (row > 0 && isOpen(row - 1, col)) {
             uf.union(xy2Index(row, col), xy2Index(row - 1, col));;
