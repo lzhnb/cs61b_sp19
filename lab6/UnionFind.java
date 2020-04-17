@@ -5,6 +5,9 @@ public class UnionFind {
     /* Creates a UnionFind data structure holding n vertices. Initially, all
        vertices are in disjoint sets. */
     public UnionFind(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("It must be positive!");
+        }
         intSets = new int[n];
         for (int i = 0; i < n; i++) {
             intSets[i] = -1;
