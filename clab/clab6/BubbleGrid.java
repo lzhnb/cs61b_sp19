@@ -10,6 +10,7 @@
  * for them to connect to the ceiling; for this case, there will be
  * some bubbles drop after the hit one been removed.
  */
+
 public class BubbleGrid {
     private int[][] grid;
     private UnionFind unionGrid;
@@ -64,7 +65,7 @@ public class BubbleGrid {
     public int[] popBubbles(int[][] darts) {
         // define count list
         int[] count = new int[darts.length];
-        int[] same_dart = new int[darts.length];
+        int[][] dart_label = new int[rowNum][colNum];
         // define temp grid
         int[][] gridTemp = new int[rowNum][colNum];
         for (int i = 0; i < rowNum; i++) {
@@ -72,14 +73,8 @@ public class BubbleGrid {
         }
 
         // avoid same dart
-        for (int i = 0; i < darts.length; i++) {
-            for (int j = i + 1; j < darts.length; j++) {
-                if (darts[i][0] == darts[j][0] && darts[i][1] == darts[i][1]) {
-                    same_dart[j] = 1;
-                } else {
-                    same_dart[j] = 0;
-                }
-            }
+        for (int[] dart : darts) {
+            dart_label[dart[0]][dart[1]] += 1;
         }
 
         for (int[] dart : darts) {
@@ -92,8 +87,11 @@ public class BubbleGrid {
         for (int i = darts.length - 1; i >= 0; i--) {
             int r = darts[i][0];
             int c = darts[i][1];
-            if (grid[r][c] == 0 || same_dart[i] == 1) {
+            if (grid[r][c] == 0) {
                 count[i] = 0;
+            } else if (dart_label[r][c] > 1) {
+                count[i] = 0;
+                dart_label[r][c] -= 1;
             } else {
                 gridTemp[r][c] = 1;
                 if (r == 0) {
