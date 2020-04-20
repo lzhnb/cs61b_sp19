@@ -23,10 +23,31 @@ public class SeparableEnemySolver {
      * Returns true if input is separable, false otherwise.
      */
     public boolean isSeparable() {
-        // TODO: Fix me
-        return false;
+        HashMap<String, Integer> colors = new HashMap<>();
+        for (String label : g.labels()) {
+            if (!colors.containsKey(label)) {
+                if (!isBipartite(label, colors, 1, label)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
+    private boolean isBipartite(String label, HashMap<String, Integer> colors, int color, String parent) {
+        if (colors.containsKey(label)) {
+            return colors.get(label) == color;
+        }
+        colors.put(label, color);
+        for (String neighbor : g.neighbors(label)) {
+            if (!neighbor.equals(parent)) {
+                if (!isBipartite(neighbor, colors, -1 * color, label)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     /* HELPERS FOR READING IN CSV FILES. */
 
